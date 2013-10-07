@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 
 public class LatinKeyboardView extends KeyboardView {
 
-    static final int KEYCODE_OPTIONS = -100;
+    private static final int KEYCODE_OPTIONS = -100;
     static final int KEYCODE_SYNTHPASS = -101;
     static final int KEYCODE_SELECT_IME = -102;
     static final int KEYCODE_MODE_CHANGE_RU = -103;

@@ -30,23 +30,20 @@ class PassGenerator {
     private final static String baseUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final static String baseLowerCase = "abcdefghijklmnopqrstuvwxyz";
     private final static String baseDigits    = "0123456789";
-    private static String baseSymbols;
-    private IAIKSHA3Provider provider;
     private MessageDigest sha512;
-    private Pattern noConsecutiveCharactersPattern;
-    private Pattern requireUppercaseLetters;
-    private Pattern requireLowercaseLettersPattern;
-    private Pattern requireDigitsPattern;
-    private Pattern requireSpecialSymbolsPattern;
-    private String symbols;
-    char[] symbolsArr;
-    int symbolsLength;
+    private final Pattern noConsecutiveCharactersPattern;
+    private final Pattern requireUppercaseLetters;
+    private final Pattern requireLowercaseLettersPattern;
+    private final Pattern requireDigitsPattern;
+    private final Pattern requireSpecialSymbolsPattern;
+    private final char[] symbolsArr;
+    private final int symbolsLength;
     public static String algorithm = "vpass3";
 
     PassGenerator() {
         super();
         // prepare digest provider
-        provider = new IAIKSHA3Provider();
+        IAIKSHA3Provider provider = new IAIKSHA3Provider();
         Security.addProvider(provider);
         try {
             sha512 = MessageDigest.getInstance("KECCAK512", "IAIK_SHA3");
@@ -54,8 +51,8 @@ class PassGenerator {
             Log.e(TAG, "Error", ex);
         }
         // prepare all available letters, digits, symbols
-        baseSymbols = baseUpperCase + baseLowerCase + baseDigits;
-        symbols = baseSymbols + PassRules.availableSymbols;
+        String baseSymbols = baseUpperCase + baseLowerCase + baseDigits;
+        String symbols = baseSymbols + PassRules.availableSymbols;
         // convert available letters, digits, symbols into array
         symbolsArr = symbols.toCharArray();
         symbolsLength = symbolsArr.length;
@@ -78,17 +75,17 @@ class PassGenerator {
         requireSpecialSymbolsPattern = Pattern.compile(symbolRegex);
     }
 
-    protected static class PassRules {
+    static class PassRules {
         public static int generatedPasswordLength     = 12;
-        public static String availableSymbols         = "!#$%&()*,-.";
+        public static final String availableSymbols         = "!#$%&()*,-.";
         public static boolean requireUppercaseLetters = true;
         public static boolean requireLowercaseLetters = true;
         public static boolean requireDigits           = true;
         public static boolean requireSpecialSymbols   = true;
-        public static boolean noConsecutiveCharacters = true;
+        public static final boolean noConsecutiveCharacters = true;
     }
 
-    protected String getSymbol(int num) {
+    String getSymbol(int num) {
         String base = "";
         if (PassRules.requireSpecialSymbols)
             base += PassRules.availableSymbols;
@@ -106,10 +103,12 @@ class PassGenerator {
             return "";
     }
 
-    protected String generate(String inputString, String domain) {
-        inputString = inputString + domain;
-        return encryptAndValidate(inputString);
-    }
+// --Commented out by Inspection START (07.10.13 15:05):
+//    protected String generate(String inputString, String domain) {
+//        inputString = inputString + domain;
+//        return encryptAndValidate(inputString);
+//    }
+// --Commented out by Inspection STOP (07.10.13 15:05)
 
     private String encryptAndValidate(String inputString) {
         String encrypted;
@@ -120,7 +119,7 @@ class PassGenerator {
         return encrypted;
     }
 
-    protected boolean validate(String inputString) {
+    boolean validate(String inputString) {
         Matcher matcher;
         if (PassRules.noConsecutiveCharacters) {
             matcher = noConsecutiveCharactersPattern.matcher(inputString);
@@ -163,10 +162,10 @@ class PassGenerator {
     }
     */
 
-    protected String getShakedString(Float entropy[]) {
+    String getShakedString(Float entropy[]) {
         ByteBuffer buf = ByteBuffer.allocate(entropy.length*4);
-        for (int i=0; i<entropy.length; i++) {
-            buf.putFloat(entropy[i]);
+        for (Float anEntropy : entropy) {
+            buf.putFloat(anEntropy);
         }
         byte[] entropyBytes = buf.array();
         entropyBytes = hash(entropyBytes);
@@ -176,7 +175,7 @@ class PassGenerator {
         char chr = 0;
         for (int i=0; i < entropy.length; i++) {
             // some black magic
-            num = (3*i + 7*chr)%entropyBytes.length;
+            num = (3*i + 5*num + 7*chr)%entropyBytes.length;
             str = getSymbol(entropyBytes[num] & 0xFF);
             if (str.length() > 0)
                 chr = str.charAt(0);
@@ -207,7 +206,7 @@ class PassGenerator {
         return inputHashArr;
     }
 
-    protected String synthEncrypt(String inputString, int requiredLength) {
+    String synthEncrypt(String inputString, int requiredLength) {
         byte[] inputHashArr = hash(inputString);
         String returnString = "";
         int num = 0;
@@ -224,11 +223,11 @@ class PassGenerator {
         return returnString;
     }
 
-    protected String encrypt(String inputString, int requiredLength) {
+    String encrypt(String inputString, int requiredLength) {
         int inputStringLength = inputString.length();
         byte[] inputHashArr = hash(inputString);
         // convert byte digest to hex string
-        StringBuffer hexString = new StringBuffer();
+        StringBuilder hexString = new StringBuilder();
         for (byte b : inputHashArr) {
             String hex = Integer.toHexString(0xFF & b);
             if (hex.length() == 1) {

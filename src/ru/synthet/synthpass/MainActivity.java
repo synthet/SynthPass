@@ -103,7 +103,7 @@ public class MainActivity extends TabActivity {
         }
     }
 
-    protected void showAbout() {
+    void showAbout() {
         View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
 
         TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
@@ -115,7 +115,10 @@ public class MainActivity extends TabActivity {
         } catch (PackageManager.NameNotFoundException ex) {
             Log.e(TAG, "Error", ex);
         }
-        String version = pInfo.versionName;
+        String version = null;
+        if (pInfo != null) {
+            version = pInfo.versionName;
+        }
         textView = (TextView) messageView.findViewById(R.id.about_desc);
         textView.setText(getString(R.string.app_name) + " " + version);
 

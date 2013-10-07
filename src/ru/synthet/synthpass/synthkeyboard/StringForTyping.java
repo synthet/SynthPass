@@ -14,7 +14,7 @@ package ru.synthet.synthpass.synthkeyboard;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class StringForTyping {
+class StringForTyping {
 	public String displayName;
 	public String value;
 
