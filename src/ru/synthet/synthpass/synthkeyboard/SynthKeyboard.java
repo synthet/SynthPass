@@ -14,11 +14,10 @@ package ru.synthet.synthpass.synthkeyboard;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import android.app.AlertDialog;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -34,9 +33,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import ru.synthet.synthpass.R;
 
-
 import java.util.ArrayList;
-
 import java.util.List;
 
 public class SynthKeyboard extends InputMethodService implements
