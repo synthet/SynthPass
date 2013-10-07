@@ -31,7 +31,7 @@ public class Preferences extends PreferenceActivity implements
         PreferenceManager.setDefaultValues(Preferences.this, R.xml.preferences, false);
 
         // Get the custom preference
-        Preference btnClearList = (Preference) findPreference("btnClearList");
+        Preference btnClearList = findPreference("btnClearList");
         btnClearList.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Toast.makeText(getBaseContext(), R.string.list_cleared, Toast.LENGTH_LONG).show();

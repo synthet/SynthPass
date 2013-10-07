@@ -22,7 +22,7 @@ import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 import ru.synthet.synthpass.R;
 
-public class LatinKeyboard extends Keyboard {
+class LatinKeyboard extends Keyboard {
 
     private Key mEnterKey;
     private Key mSpaceKey;

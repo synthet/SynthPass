@@ -78,11 +78,6 @@ public class PassGenActivity extends Activity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     protected void onResume() {
         super.onResume();
         getPrefs();
@@ -99,26 +94,26 @@ public class PassGenActivity extends Activity {
         PassGenerator.algorithm                         = prefs.getString("lbAlgorithm", "vpass3");
         //Toast.makeText(PassGenActivity.this, PassGenerator.algorithm, Toast.LENGTH_SHORT).show();
         domainsList.clear();
-        domainsList.addAll(Arrays.asList(loadArray("domainsList")));
+        domainsList.addAll(Arrays.asList(loadArray()));
         adapter = new ArrayAdapter<String>(PassGenActivity.this, android.R.layout.simple_dropdown_item_1line, domainsList);
         editDomainName.setAdapter(adapter);
     }
 
-    private String[] loadArray(String arrayName) {
+    private String[] loadArray() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int size = prefs.getInt(arrayName + "_size", 0);
+        int size = prefs.getInt("domainsList" + "_size", 0);
         String array[] = new String[size];
         for(int i=0;i<size;i++)
-            array[i] = prefs.getString(arrayName + "_" + i, null);
+            array[i] = prefs.getString("domainsList" + "_" + i, null);
         return array;
     }
 
-    private boolean saveArray(String[] array, String arrayName) {
+    private boolean saveArray(String[] array) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(arrayName +"_size", array.length);
+        editor.putInt("domainsList" +"_size", array.length);
         for(int i=0;i<array.length;i++)
-            editor.putString(arrayName + "_" + i, array[i]);
+            editor.putString("domainsList" + "_" + i, array[i]);
         return editor.commit();
     }
 
@@ -153,7 +148,7 @@ public class PassGenActivity extends Activity {
                         domainsList.add(domainName);
                         adapter = new ArrayAdapter<String>(PassGenActivity.this, android.R.layout.simple_dropdown_item_1line, domainsList);
                         editDomainName.setAdapter(adapter);
-                        saveArray(domainsList.toArray(new String[domainsList.size()]),"domainsList");
+                        saveArray(domainsList.toArray(new String[domainsList.size()]));
                     }
                     touchGenButton();
                 }
@@ -188,7 +183,7 @@ public class PassGenActivity extends Activity {
         genButton.setText(R.string.stop);
     }
 
-    private Runnable genThread = new Runnable() {
+    private final Runnable genThread = new Runnable() {
 
         private void vPass() {
             String inputString = masterPassword + domainName;
@@ -243,7 +238,7 @@ public class PassGenActivity extends Activity {
             handler.sendMessage(msg);
             isThreadRunning = false;
         }
-        Handler handler = new Handler() {
+        final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 Bundle b         = msg.getData();
@@ -258,7 +253,7 @@ public class PassGenActivity extends Activity {
         };
     };
 
-    protected void returnPassword(String keyString) {
+    void returnPassword(String keyString) {
         KeyboardDataBuilder kbdataBuilder = new KeyboardDataBuilder();
         kbdataBuilder.addPair(getString(R.string.last_password), keyString);
         kbdataBuilder.commit();
@@ -272,7 +267,7 @@ public class PassGenActivity extends Activity {
         }
     }
 
-    protected static void showDecoratedPassword(String inputString, TextView textView) {
+    static void showDecoratedPassword(String inputString, TextView textView) {
         SpannableString spannableResultString = new SpannableString(inputString);
         for(int i=0; i<inputString.length(); i++) {
             if (!Character.isLetterOrDigit(inputString.charAt(i))) {

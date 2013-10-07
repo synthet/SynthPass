@@ -278,11 +278,10 @@ public class SynthKeyboard extends InputMethodService implements
 			}
 
 			List<String> stringList = new ArrayList<String>();
-			for (int i = 0; i < completions.length; i++) {
-				CompletionInfo ci = completions[i];
-				if (ci != null)
-					stringList.add(ci.getText().toString());
-			}
+            for (CompletionInfo ci : completions) {
+                if (ci != null)
+                    stringList.add(ci.getText().toString());
+            }
 			setSuggestions(stringList, true, true);
 		}
 	}
@@ -544,8 +543,8 @@ public class SynthKeyboard extends InputMethodService implements
 		}
 	}
 
-	public void setSuggestions(List<String> suggestions, boolean completions,
-			boolean typedWordValid) {
+	void setSuggestions(List<String> suggestions, boolean completions,
+                        boolean typedWordValid) {
 		if (suggestions != null && suggestions.size() > 0) {
 			setCandidatesViewShown(true);
 		} else if (isExtractViewShown()) {
@@ -619,12 +618,12 @@ public class SynthKeyboard extends InputMethodService implements
 		return mWordSeparators;
 	}
 
-	public boolean isWordSeparator(int code) {
+	boolean isWordSeparator(int code) {
 		String separators = getWordSeparators();
 		return separators.contains(String.valueOf((char) code));
 	}
 
-	public void pickDefaultCandidate() {
+	void pickDefaultCandidate() {
 		pickSuggestionManually(0);
 	}
 

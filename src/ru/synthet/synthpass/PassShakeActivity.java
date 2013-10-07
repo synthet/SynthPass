@@ -166,7 +166,7 @@ public class PassShakeActivity extends Activity implements SharedPreferences.OnS
         };
     }
 
-    static String removeDuplicates(String s) {
+    private static String removeDuplicates(String s) {
         StringBuilder noDupes = new StringBuilder();
         int strLen = s.length();
         for (int i = 0; i < strLen-1; i++) {
@@ -246,11 +246,6 @@ public class PassShakeActivity extends Activity implements SharedPreferences.OnS
         xAccel[type] = xNewAccel;
         yAccel[type] = yNewAccel;
         zAccel[type] = zNewAccel;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override

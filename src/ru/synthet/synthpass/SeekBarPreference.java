@@ -140,7 +140,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 * Update a SeekBarPreference view with our current state
 	 * @param view
 	 */
-	protected void updateView(View view) {
+        void updateView(View view) {
 
 		try {
 			mStatusText = (TextView) view.findViewById(R.id.seekBarPrefValue);
@@ -198,10 +198,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	@Override 
 	protected Object onGetDefaultValue(TypedArray ta, int index){
-		
-		int defaultValue = ta.getInt(index, DEFAULT_VALUE);
-		return defaultValue;
-		
+		return ta.getInt(index, DEFAULT_VALUE);
 	}
 
 	@Override

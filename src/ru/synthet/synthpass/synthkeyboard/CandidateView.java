@@ -28,7 +28,7 @@ import ru.synthet.synthpass.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CandidateView extends View {
+class CandidateView extends View {
 
     private static final int OUT_OF_BOUNDS = -1;
 
