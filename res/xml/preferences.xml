@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2008, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:synthet="http://synthet.ru"
+        android:key="preference_screen">
+    <PreferenceCategory
+            android:title="@string/options">
+        <CheckBoxPreference
+                android:title="@string/spec_symbols"
+                android:defaultValue="true"
+                android:summary="@string/specsymbols"
+                android:key="cbReqSpecial" />
+        <CheckBoxPreference
+                android:title="@string/digits"
+                android:defaultValue="true"
+                android:summary="@string/digits123"
+                android:key="cbReqDigits" />
+        <CheckBoxPreference
+                android:title="@string/lower_case"
+                android:defaultValue="true"
+                android:summary="@string/lowercase"
+                android:key="cbLowerCase" />
+        <CheckBoxPreference
+                android:title="@string/upper_case"
+                android:defaultValue="true"
+                android:summary="@string/uppercase"
+                android:key="cbUpperCase" />
+        <ru.synthet.synthpass.SeekBarPreference
+                android:key="count"
+                android:title="@string/seekbar_title"
+                android:summary="@string/seekbar_summary"
+                android:defaultValue="12"
+                android:max="24"
+                synthet:min="4"
+                synthet:unitsLeft=""
+                synthet:unitsRight=""
+                />
+        <ListPreference
+                android:title="@string/alg_title"
+                android:summary="@string/alg_default"
+                android:key="lbAlgorithm"
+                android:defaultValue="@string/alg_defaultval"
+                android:entries="@array/algorithm"
+                android:entryValues="@array/algorithmAlias" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/options_sec">
+        <PreferenceScreen
+                android:key="secOptions"
+                android:title="@string/options_sec"
+                android:summary="@string/options_sec_sum">
+            <CheckBoxPreference
+                    android:title="@string/save_domains"
+                    android:defaultValue="true"
+                    android:summary="domain.com"
+                    android:key="cbSaveDomains" />
+            <Preference
+                    android:title="@string/clear_list"
+                    android:summary="@string/clear_list_domains"
+                    android:key="btnClearList" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>

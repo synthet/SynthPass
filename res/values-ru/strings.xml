@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2013, Vladimir Synthet
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources>
+    <string name="app_name">SynthPass</string>
+    <string name="master_password">мастер-пароль</string>
+    <string name="domain_login">домен / логин</string>
+    <string name="generate">генерация</string>
+    <string name="password">пароль для web</string>
+    <string name="text_count">12</string>
+    <string name="special_symbols">спец. символы</string>
+    <string name="set_preferences">Настройки</string>
+    <string name="menu_about">О программе</string>
+    <string name="options">Опции Генерации</string>
+    <string name="digits">Цифры</string>
+    <string name="spec_symbols">Спец. символы</string>
+    <string name="domain">сайт</string>
+    <string name="seekbar_title">Длина пароля</string>
+    <string name="seekbar_summary">Количество символов</string>
+    <string name="options_sec">Опции Безопасности</string>
+    <string name="specsymbols"><![CDATA[!#$%&()*,-.]]></string>
+    <string name="digits123">0123456789</string>
+    <string name="save_domains">Хранить сайты</string>
+    <string name="clear_list">Очистить список</string>
+    <string name="clear_list_domains">Очистить список сайтов</string>
+    <string name="list_cleared">Список очищен</string>
+    <string name="random">random пароль</string>
+    <string name="shake_phone">потрясите устройство</string>
+    <string name="reset_button">сброс</string>
+    <string name="generator">web пароль</string>
+    <string name="prefs">настройки</string>
+    <string name="lowercase">abc</string>
+    <string name="uppercase">ABC</string>
+    <string name="upper_case">Большие буквы</string>
+    <string name="lower_case">Маленькие буквы</string>
+    <string name="stop">стоп</string>
+    <string name="alg_default">vPass 3</string>
+    <string name="alg_defaultval">vpass3</string>
+    <string name="alg_title">Алгоритм</string>
+    <string name="entropy">энтропия:</string>
+    <string name="options_sec_sum">Экран опций безопасности</string>
+    <string name="about"><![CDATA[SynthPass © Synthetic Soft 2013
+        vPass 3 algorithm by Vladstudio (www.vpass.info)]]></string>
+
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|\"</string>
+    <string name="change_entry">Создать пароль</string>
+    <string name="open_entry">Создать пароль</string>
+    <string name="random_entry">случайный</string>
+    <string name="label_go_key">Перейти</string>
+    <string name="label_next_key">Вперёд</string>
+    <string name="label_done_key">Готово</string>
+    <string name="label_send_key">Отправить</string>
+    <string name="last_password">Вставить пароль</string>
+</resources>

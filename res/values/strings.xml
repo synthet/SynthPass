@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2013, Vladimir Synthet
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources>
+    <string name="app_name">SynthPass</string>
+    <string name="master_password">master password</string>
+    <string name="domain_login">domain / login</string>
+    <string name="generate">generate</string>
+    <string name="password">password for web</string>
+    <string name="text_count">12</string>
+    <string name="special_symbols">special symbols</string>
+    <string name="set_preferences">Settings</string>
+    <string name="menu_about">About</string>
+    <string name="options">Generation Settings</string>
+    <string name="digits">Digits</string>
+    <string name="spec_symbols">Spec. symbols</string>
+    <string name="domain">domain</string>
+    <string name="seekbar_title">Password length</string>
+    <string name="seekbar_summary">Number of characters</string>
+    <string name="options_sec">Security Options</string>
+    <string name="specsymbols"><![CDATA[!#$%&()*,-.]]></string>
+    <string name="digits123">0123456789</string>
+    <string name="save_domains">Save domains</string>
+    <string name="clear_list">Clear list</string>
+    <string name="clear_list_domains">Clear list of domains</string>
+    <string name="list_cleared">List was cleared</string>
+    <string name="random">random password</string>
+    <string name="shake_phone">shake the device</string>
+    <string name="reset_button">reset</string>
+    <string name="generator">web password</string>
+    <string name="prefs">settings</string>
+    <string name="lowercase">abc</string>
+    <string name="uppercase">ABC</string>
+    <string name="upper_case">Upper case</string>
+    <string name="lower_case">Lower case</string>
+    <string name="stop">stop</string>
+    <string name="alg_default">vPass 3</string>
+    <string name="alg_defaultval">vpass3</string>
+    <string name="alg_title">Algorithm</string>
+    <string name="entropy">entropy:</string>
+    <string name="options_sec_sum">Security options screen</string>
+    <string name="about"><![CDATA[SynthPass © Synthetic Soft 2013
+        vPass 3 algorithm by Vladstudio (www.vpass.info)]]></string>
+
+    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>
+    <string name="change_entry">Create password</string>
+    <string name="open_entry">Create password</string>
+    <string name="random_entry">random</string>
+    <string name="label_go_key">Go</string>
+    <string name="label_next_key">Next</string>
+    <string name="label_send_key">Send</string>
+    <string name="label_done_key">Done</string>
+    <string name="label_subtype_generic">%s</string>
+    <string name="last_password">Insert password</string>
+</resources>
