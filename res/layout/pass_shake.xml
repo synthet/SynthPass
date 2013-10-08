@@ -17,34 +17,52 @@
 */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_weight="1">
 
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="2dp"
-                  android:background="@color/password_color" android:baselineAligned="true"
-                  android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:id="@+id/horline1"
-                  android:layout_gravity="left|center_vertical"/>
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/password"
-              android:id="@+id/textStatus" android:layout_gravity="center" android:textSize="20dp"
-              android:paddingTop="5dp" android:paddingBottom="5dp" android:textColor="@color/password_color"
-              android:typeface="monospace" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="2dp"
-                  android:layout_gravity="left|center_vertical" android:background="@color/password_color"
-                  android:baselineAligned="true" android:layout_marginTop="5dp" android:layout_marginBottom="10dp"
-                  android:id="@+id/horline2"/>
-    <ProgressBar
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="2dp"
+                      android:background="@color/password_color" android:baselineAligned="true"
+                      android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:id="@+id/horline1"
+                      android:layout_gravity="left|center_vertical"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/password"
+                  android:id="@+id/textStatus" android:layout_gravity="center" android:textSize="20dp"
+                  android:paddingTop="5dp" android:paddingBottom="5dp" android:textColor="@color/password_color"
+                  android:typeface="monospace" android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="2dp"
+                      android:layout_gravity="left|center_vertical" android:background="@color/password_color"
+                      android:baselineAligned="true" android:layout_marginTop="5dp" android:layout_marginBottom="10dp"
+                      android:id="@+id/horline2"/>
+        <ProgressBar
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:id="@+id/progressBar" android:layout_gravity="center"
+                android:layout_marginBottom="10dp" android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" android:layout_marginTop="5dp"/>
+        <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reset_button"
+                android:id="@+id/button" android:layout_gravity="center" android:layout_margin="5dp"
+                android:singleLine="false"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/entropyCount" android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:id="@+id/progressBar" android:layout_gravity="center"
-            android:layout_marginBottom="10dp" android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" android:layout_marginTop="5dp"/>
-    <Button android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/reset_button"
-            android:id="@+id/button" android:layout_gravity="center" android:layout_margin="5dp"
-            android:singleLine="false"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/entropyCount" android:layout_gravity="center"/>
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal">
+        <com.google.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/admob_publisher_id"
+                ads:loadAdOnCreate="true" android:layout_weight="0" android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
 </LinearLayout>

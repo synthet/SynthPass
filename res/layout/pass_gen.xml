@@ -16,12 +16,15 @@
 ** limitations under the License.
 */
 -->
-<ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/scrollView">
-        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
-                      android:layout_height="wrap_content" android:id="@+id/linearLayout">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_weight="1">
             <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="2dp"
                           android:background="@color/password_color"
                           android:baselineAligned="true" android:layout_marginTop="5dp"
@@ -54,13 +57,21 @@
                     android:id="@+id/domainSearch" android:layout_gravity="left|center_vertical" android:hint="@string/domain"
                     android:layout_margin="5dp" android:inputType="textVisiblePassword"
                     android:longClickable="false"/>
-            <Button android:layout_width="fill_parent" android:layout_height="fill_parent"
+            <Button android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="@string/generate" android:id="@+id/button"
                     android:layout_gravity="center" android:layout_margin="5dp"/>
             <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content"
                          android:id="@+id/progressBar"
                          android:indeterminate="false" android:visibility="invisible"
                          android:layout_gravity="center" android:layout_marginBottom="5dp"/>
-        </LinearLayout>
+    </LinearLayout>
 
-</ScrollView>
+    <com.google.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            ads:refreshInterval="60"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/admob_publisher_id"
+            ads:loadAdOnCreate="true" android:layout_weight="0" android:layout_gravity="center_horizontal|bottom"/>
+</LinearLayout>

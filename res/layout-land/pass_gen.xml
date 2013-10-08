@@ -16,18 +16,11 @@
 ** limitations under the License.
 */
 -->
-<ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/scrollView"
-        >
-    <LinearLayout
-            android:orientation="vertical"
+<LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent"
-                      android:layout_above="@+id/footerContainer" android:layout_below="@+id/headerContainer"
-                      android:layout_height="wrap_content" android:id="@+id/linearLayout">
+            android:layout_height="fill_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/genView"
+            android:orientation="vertical">
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
@@ -68,12 +61,4 @@
                         android:text="@string/generate" android:id="@+id/button"
                         android:layout_margin="5dp"/>
             </LinearLayout>
-        </LinearLayout>
-        <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressBar" android:indeterminate="false"
-                android:visibility="invisible" android:layout_gravity="center" android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

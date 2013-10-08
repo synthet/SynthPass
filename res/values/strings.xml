@@ -18,6 +18,7 @@
 -->
 <resources>
     <string name="app_name">SynthPass</string>
+    <string name="admob_publisher_id">a152458f4a74752</string>
     <string name="master_password">master password</string>
     <string name="domain_login">domain / login</string>
     <string name="generate">generate</string>
