@@ -164,6 +164,8 @@ public class PassGenActivity extends Activity {
                 domainName     = editDomainName.getText().toString();
                 editMasterPassword.setText("");
                 editDomainName.setText("");
+                editMasterPassword.clearFocus();
+                editDomainName.clearFocus();
                 touchGenButton();
             }
         };
@@ -179,7 +181,8 @@ public class PassGenActivity extends Activity {
         if ((isThreadRunning) || (masterPassword.length() == 0)) return;
         generationThread = new Thread(genThread);
         generationThread.start();
-        progressBar.setVisibility(View.VISIBLE);
+        if (progressBar != null)
+            progressBar.setVisibility(View.VISIBLE);
         genButton.setText(R.string.stop);
     }
 
@@ -247,7 +250,8 @@ public class PassGenActivity extends Activity {
                     returnPassword(keyString);
                     showDecoratedPassword(keyString, message);
                 }
-                progressBar.setVisibility(View.INVISIBLE);
+                if (progressBar != null)
+                    progressBar.setVisibility(View.INVISIBLE);
                 genButton.setText(R.string.generate);
             }
         };
