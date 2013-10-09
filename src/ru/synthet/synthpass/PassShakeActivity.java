@@ -125,6 +125,9 @@ public class PassShakeActivity extends Activity implements SharedPreferences.OnS
         progressBar.setMax(PassGenerator.PassRules.generatedPasswordLength);
         progressBar.setProgress(currentBytes);
         entropyCount.setText("");
+        // testing lines
+        //progressBar.setProgress(12);
+        //PassGenActivity.showDecoratedPassword("o1L*0)liOx@I", textStatus);
     }
 
     @Override
