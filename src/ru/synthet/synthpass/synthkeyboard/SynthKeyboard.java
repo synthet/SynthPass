@@ -69,7 +69,14 @@ public class SynthKeyboard extends InputMethodService implements
 		mWordSeparators = getResources().getString(R.string.word_separators);
 	}
 
-	/**
+    //
+    @Override
+    public void onUpdateExtractingVisibility(EditorInfo ei) {
+        ei.imeOptions |= EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+        super.onUpdateExtractingVisibility(ei);
+    }
+
+    /**
 	 * This is the point where you can do all of your UI initialization. It is
 	 * called after creation and any configuration change.
 	 */

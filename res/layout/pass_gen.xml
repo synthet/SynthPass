@@ -48,11 +48,12 @@
                       android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:layout_marginRight="5dp"
                       android:editable="true" android:focusable="true" android:enabled="true" android:password="true"
                       android:singleLine="true" android:selectAllOnFocus="false" android:hint="@string/master_password"
+                      android:imeOptions="flagNoExtractUi"
                       android:layout_marginLeft="5dp" android:layout_margin="5dp" android:inputType="textNoSuggestions|textPassword"/>
             <AutoCompleteTextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="flagNoExtractUi|actionDone"
                     android:id="@+id/domainSearch" android:layout_gravity="left|center_vertical" android:hint="@string/domain"
                     android:layout_margin="5dp" android:inputType="textVisiblePassword"
                     android:longClickable="false"/>
