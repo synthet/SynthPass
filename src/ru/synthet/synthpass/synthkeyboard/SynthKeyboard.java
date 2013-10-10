@@ -23,10 +23,7 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.provider.Settings;
 import android.text.InputType;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -420,8 +417,8 @@ public class SynthKeyboard extends InputMethodService implements
 			handleClose();
 			return;
 		} else if (primaryCode == LatinKeyboardView.KEYCODE_SYNTHPASS) {
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_Dialog));
 			String title = getString(R.string.app_name);
 			List<StringForTyping> availableFields = KeyboardData.availableFields;
 			

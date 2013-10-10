@@ -40,10 +40,7 @@ public class MainActivity extends TabActivity {
     private void initializeApp() {
         // init Tabs
         tabHost = getTabHost();
-
         tabHost.setup();
-
-
 
         TabHost.TabSpec tabSpec;
         Intent intent = getIntent();
@@ -68,14 +65,12 @@ public class MainActivity extends TabActivity {
         tabSpec.setIndicator(getResources().getString(R.string.prefs));
         tabSpec.setContent(new Intent(this, Preferences.class));
         tabHost.addTab(tabSpec);
-
         // add
         tabHost.setCurrentTab(0);
         tabHost.getTabWidget().getLayoutParams().height = 50;
         tabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 50;
         tabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 50;
         tabHost.getTabWidget().getChildAt(2).getLayoutParams().height = 50;
-
 
     }
 
