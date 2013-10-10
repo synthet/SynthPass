@@ -34,6 +34,7 @@
     <string name="seekbar_title">Длина пароля</string>
     <string name="seekbar_summary">Количество символов</string>
     <string name="options_sec">Опции Безопасности</string>
+    <string name="options_sec_title">Опции безопасности</string>
     <string name="specsymbols"><![CDATA[!#$%&()*,-.]]></string>
     <string name="digits123">0123456789</string>
     <string name="save_domains">Хранить сайты</string>

@@ -210,14 +210,14 @@ public class SynthKeyboard extends InputMethodService implements
 		super.onFinishInput();
 
 		// Clear current composing text and candidates.
-		//mComposing.setLength(0);
-		//updateCandidates();
+		mComposing.setLength(0);
+		updateCandidates();
 
 		// We only hide the candidates window when finishing input on
 		// a particular editor, to avoid popping the underlying application
 		// up and down if the user is entering text into the bottom of
 		// its window.
-		//setCandidatesViewShown(false);
+		setCandidatesViewShown(false);
 
 		mCurKeyboard = mQwertyABCKeyboard;
 		if (mInputView != null) {

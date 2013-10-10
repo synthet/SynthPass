@@ -34,6 +34,7 @@
     <string name="seekbar_title">Password length</string>
     <string name="seekbar_summary">Number of characters</string>
     <string name="options_sec">Security Options</string>
+    <string name="options_sec_title">Security options</string>
     <string name="specsymbols"><![CDATA[!#$%&()*,-.]]></string>
     <string name="digits123">0123456789</string>
     <string name="save_domains">Save domains</string>

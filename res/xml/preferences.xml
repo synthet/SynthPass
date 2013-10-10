@@ -64,7 +64,7 @@
             android:title="@string/options_sec">
         <PreferenceScreen
                 android:key="secOptions"
-                android:title="@string/options_sec"
+                android:title="@string/options_sec_title"
                 android:summary="@string/options_sec_sum">
             <CheckBoxPreference
                     android:title="@string/save_domains"
