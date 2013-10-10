@@ -24,4 +24,5 @@
     <color name="password_color">#9380FF</color>
     <color name="bg_color">#ffffff</color>
     <color name="password_color_digit">#80FF93</color>
+    <color name="transparent">#00000000</color>
 </resources>
