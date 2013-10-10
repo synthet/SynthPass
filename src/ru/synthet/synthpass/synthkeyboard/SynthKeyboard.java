@@ -39,12 +39,10 @@ public class SynthKeyboard extends InputMethodService implements
 	private InputMethodManager mInputMethodManager;
 
 	private LatinKeyboardView mInputView;
-	private CandidateView mCandidateView;
-	private CompletionInfo[] mCompletions;
 
 	private StringBuilder mComposing = new StringBuilder();
 	private boolean mPredictionOn;
-	private boolean mCompletionOn;
+	private boolean mCompletionOn = false;
 	private int mLastDisplayWidth;
 	private boolean mCapsLock;
 	private long mLastShiftTime;
@@ -69,12 +67,11 @@ public class SynthKeyboard extends InputMethodService implements
 		mWordSeparators = getResources().getString(R.string.word_separators);
 	}
 
-    //
-    @Override
-    public void onUpdateExtractingVisibility(EditorInfo ei) {
-        ei.imeOptions |= EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-        super.onUpdateExtractingVisibility(ei);
-    }
+    //@Override
+    //public void onUpdateExtractingVisibility(EditorInfo ei) {
+    //    ei.imeOptions |= EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+    //    super.onUpdateExtractingVisibility(ei);
+    //}
 
     /**
 	 * This is the point where you can do all of your UI initialization. It is
@@ -114,17 +111,6 @@ public class SynthKeyboard extends InputMethodService implements
 	}
 
 	/**
-	 * Called by the framework when your view for showing candidates needs to be
-	 * generated, like {@link #onCreateInputView}.
-	 */
-	@Override
-	public View onCreateCandidatesView() {
-		mCandidateView = new CandidateView(this);
-		mCandidateView.setService(this);
-		return mCandidateView;
-	}
-
-	/**
 	 * This is the main point where we do our initialization of the input method
 	 * to begin operating on an application. At this point we have been bound to
 	 * the client, and are now receiving all of the detailed information about
@@ -138,11 +124,9 @@ public class SynthKeyboard extends InputMethodService implements
 		// the underlying state of the text editor could have changed in any
 		// way.
 		mComposing.setLength(0);
-		updateCandidates();
 
 		mPredictionOn = false;
 		mCompletionOn = false;
-		mCompletions = null;
 
 		// We are now going to initialize our state based on the type of
 		// text being edited.
@@ -218,13 +202,6 @@ public class SynthKeyboard extends InputMethodService implements
 
 		// Clear current composing text and candidates.
 		mComposing.setLength(0);
-		updateCandidates();
-
-		// We only hide the candidates window when finishing input on
-		// a particular editor, to avoid popping the underlying application
-		// up and down if the user is entering text into the bottom of
-		// its window.
-		setCandidatesViewShown(false);
 
 		mCurKeyboard = mQwertyABCKeyboard;
 		if (mInputView != null) {
@@ -258,7 +235,6 @@ public class SynthKeyboard extends InputMethodService implements
 		if (mComposing.length() > 0
 				&& (newSelStart != candidatesEnd || newSelEnd != candidatesEnd)) {
 			mComposing.setLength(0);
-			updateCandidates();
 			InputConnection ic = getCurrentInputConnection();
 			if (ic != null) {
 				ic.finishComposingText();
@@ -274,20 +250,7 @@ public class SynthKeyboard extends InputMethodService implements
 	 */
 	@Override
 	public void onDisplayCompletions(CompletionInfo[] completions) {
-		if (mCompletionOn) {
-			mCompletions = completions;
-			if (completions == null) {
-				setSuggestions(null, false, false);
-				return;
-			}
 
-			List<String> stringList = new ArrayList<String>();
-            for (CompletionInfo ci : completions) {
-                if (ci != null)
-                    stringList.add(ci.getText().toString());
-            }
-			setSuggestions(stringList, true, true);
-		}
 	}
 
 	/**
@@ -339,7 +302,6 @@ public class SynthKeyboard extends InputMethodService implements
 		if (mComposing.length() > 0) {
 			inputConnection.commitText(mComposing, mComposing.length());
 			mComposing.setLength(0);
-			updateCandidates();
 		}
 	}
 
@@ -531,45 +493,14 @@ public class SynthKeyboard extends InputMethodService implements
 		updateShiftKeyState(getCurrentInputEditorInfo());
 	}
 
-	/**
-	 * Update the list of available candidates from the current composing text.
-	 * This will need to be filled in by however you are determining candidates.
-	 */
-	private void updateCandidates() {
-		if (!mCompletionOn) {
-			if (mComposing.length() > 0) {
-				ArrayList<String> list = new ArrayList<String>();
-				list.add(mComposing.toString());
-				setSuggestions(list, true, true);
-			} else {
-				setSuggestions(null, false, false);
-			}
-		}
-	}
-
-	void setSuggestions(List<String> suggestions, boolean completions,
-                        boolean typedWordValid) {
-		if (suggestions != null && suggestions.size() > 0) {
-			setCandidatesViewShown(true);
-		} else if (isExtractViewShown()) {
-			setCandidatesViewShown(true);
-		}
-		if (mCandidateView != null) {
-			mCandidateView.setSuggestions(suggestions, completions,
-					typedWordValid);
-		}
-	}
-
 	private void handleBackspace() {
 		final int length = mComposing.length();
 		if (length > 1) {
 			mComposing.delete(length - 1, length);
 			getCurrentInputConnection().setComposingText(mComposing, 1);
-			updateCandidates();
 		} else if (length > 0) {
 			mComposing.setLength(0);
 			getCurrentInputConnection().commitText("", 0);
-			updateCandidates();
 		} else {
 			keyDownUp(KeyEvent.KEYCODE_DEL);
 		}
@@ -595,7 +526,6 @@ public class SynthKeyboard extends InputMethodService implements
 			mComposing.append((char) primaryCode);
 			getCurrentInputConnection().setComposingText(mComposing, 1);
 			updateShiftKeyState(getCurrentInputEditorInfo());
-			updateCandidates();
 		} else {
 			getCurrentInputConnection().commitText(
 					String.valueOf((char) primaryCode), 1);
@@ -627,31 +557,8 @@ public class SynthKeyboard extends InputMethodService implements
 		return separators.contains(String.valueOf((char) code));
 	}
 
-	void pickDefaultCandidate() {
-		pickSuggestionManually(0);
-	}
-
-	public void pickSuggestionManually(int index) {
-		if (mCompletionOn && mCompletions != null && index >= 0
-				&& index < mCompletions.length) {
-			CompletionInfo ci = mCompletions[index];
-			getCurrentInputConnection().commitCompletion(ci);
-			if (mCandidateView != null) {
-				mCandidateView.clear();
-			}
-			updateShiftKeyState(getCurrentInputEditorInfo());
-		} else if (mComposing.length() > 0) {
-			// If we were generating candidate suggestions for the current
-			// text, we would commit one of them here. But for this sample,
-			// we will just commit the current text.
-			commitTyped(getCurrentInputConnection());
-		}
-	}
-
 	public void swipeRight() {
-		if (mCompletionOn) {
-			pickDefaultCandidate();
-		}
+
 	}
 
 	public void swipeLeft() {

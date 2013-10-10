@@ -48,7 +48,7 @@
                       android:editable="true" android:focusable="true" android:enabled="true" android:password="true"
                       android:singleLine="true" android:selectAllOnFocus="false" android:hint="@string/master_password"
                       android:layout_marginLeft="5dp" android:layout_margin="5dp" android:inputType="textNoSuggestions|textPassword"/>
-            <AutoCompleteTextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+            <EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
                                   android:imeOptions="actionDone" android:id="@+id/domainSearch"
                                   android:layout_gravity="center" android:hint="@string/domain"
                                   android:layout_margin="5dp" android:inputType="textVisiblePassword"

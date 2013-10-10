@@ -46,7 +46,7 @@ public class PassGenActivity extends Activity {
     private volatile ProgressBar progressBar;
     private volatile Button genButton;
     private EditText editMasterPassword;
-    private AutoCompleteTextView editDomainName;
+    private EditText editDomainName;
     private String masterPassword;
     private String domainName;
     private boolean saveDomains = true;
@@ -96,7 +96,9 @@ public class PassGenActivity extends Activity {
         domainsList.clear();
         domainsList.addAll(Arrays.asList(loadArray()));
         adapter = new ArrayAdapter<String>(PassGenActivity.this, android.R.layout.simple_dropdown_item_1line, domainsList);
-        editDomainName.setAdapter(adapter);
+        if (editDomainName instanceof AutoCompleteTextView)  {
+            ((AutoCompleteTextView)editDomainName).setAdapter(adapter);
+        }
     }
 
     private String[] loadArray() {
@@ -128,8 +130,12 @@ public class PassGenActivity extends Activity {
         genButton          = (Button) findViewById(R.id.button);
         message            = (TextView) findViewById(R.id.messsage);
         editMasterPassword = (EditText) findViewById(R.id.editText);
-        editDomainName     = (AutoCompleteTextView) findViewById(R.id.domainSearch);
         progressBar        = (ProgressBar) findViewById(R.id.progressBar);
+        if (findViewById(R.id.domainSearch) instanceof AutoCompleteTextView) {
+            editDomainName = (AutoCompleteTextView) findViewById(R.id.domainSearch);
+        } else {
+            editDomainName = (EditText) findViewById(R.id.domainSearch);
+        }
 
         // обработчик поля ввода editDomainName
         domainPattern = Pattern.compile(domainNamePattern);
@@ -147,7 +153,9 @@ public class PassGenActivity extends Activity {
                     if ((!domainsList.contains(domainName)) && (domainMatcher.matches()) && (saveDomains)) {
                         domainsList.add(domainName);
                         adapter = new ArrayAdapter<String>(PassGenActivity.this, android.R.layout.simple_dropdown_item_1line, domainsList);
-                        editDomainName.setAdapter(adapter);
+                        if (editDomainName instanceof AutoCompleteTextView)  {
+                            ((AutoCompleteTextView)editDomainName).setAdapter(adapter);
+                        }
                         saveArray(domainsList.toArray(new String[domainsList.size()]));
                     }
                     touchGenButton();
