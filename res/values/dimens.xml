@@ -21,5 +21,4 @@
     <dimen name="padding_left">0.0dip</dimen>
     <dimen name="candidate_font_height">16sp</dimen>
     <dimen name="candidate_vertical_padding">6sp</dimen>
-    <dimen name="tab_host_default_height">48dp</dimen>
 </resources>
