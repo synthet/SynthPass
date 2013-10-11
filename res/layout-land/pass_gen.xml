@@ -44,15 +44,17 @@
                           android:layout_gravity="center">
             </LinearLayout>
             <EditText android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/editText"
+                      android:imeOptions="flagNoExtractUi"
                       android:layout_marginTop="5dp" android:layout_marginBottom="5dp" android:layout_marginRight="5dp"
                       android:editable="true" android:focusable="true" android:enabled="true" android:password="true"
                       android:singleLine="true" android:selectAllOnFocus="false" android:hint="@string/master_password"
                       android:layout_marginLeft="5dp" android:layout_margin="5dp" android:inputType="textNoSuggestions|textPassword"/>
             <EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
-                                  android:imeOptions="actionDone" android:id="@+id/domainSearch"
-                                  android:layout_gravity="center" android:hint="@string/domain"
-                                  android:layout_margin="5dp" android:inputType="textVisiblePassword"
-                                  android:longClickable="false"/>
+                      android:imeOptions="flagNoExtractUi|actionDone"
+                      android:id="@+id/domainSearch"
+                      android:layout_gravity="center" android:hint="@string/domain"
+                      android:layout_margin="5dp" android:inputType="textVisiblePassword"
+                      android:longClickable="false"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
