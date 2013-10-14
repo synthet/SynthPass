@@ -19,7 +19,7 @@
 <Keyboard android:keyWidth="8.25%p" android:keyHeight="@dimen/key_height" android:horizontalGap="0.0px" android:verticalGap="0.0px"
           xmlns:android="http://schemas.android.com/apk/res/android">
     <Row>
-        <Key android:horizontalGap="4.2%p" android:codes="96" android:keyEdgeFlags="left" android:keyLabel="ё" />
+        <Key android:codes="96" android:keyLabel="ё" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
         <Key android:codes="49" android:keyLabel="1" />
         <Key android:codes="50" android:keyLabel="2" />
         <Key android:codes="51" android:keyLabel="3" />
@@ -29,10 +29,11 @@
         <Key android:codes="55" android:keyLabel="7" />
         <Key android:codes="56" android:keyLabel="8" />
         <Key android:codes="57" android:keyLabel="9" />
-        <Key android:codes="48" android:keyEdgeFlags="right" android:keyLabel="0" />
+        <Key android:codes="48" android:keyLabel="0" />
+        <Key android:codes="45" android:keyLabel="-" android:keyEdgeFlags="right" />
     </Row>
     <Row>
-        <Key android:horizontalGap="1.0%p" android:codes="113" android:keyEdgeFlags="left" android:keyLabel="й" />
+        <Key android:codes="113" android:keyLabel="й" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
         <Key android:codes="119" android:keyLabel="ц" />
         <Key android:codes="101" android:keyLabel="у" />
         <Key android:codes="114" android:keyLabel="к" />
@@ -46,7 +47,7 @@
         <Key android:codes="93" android:keyEdgeFlags="right" android:keyLabel="ъ" />
     </Row>
     <Row>
-        <Key android:horizontalGap="4.2%p" android:codes="97" android:keyEdgeFlags="left" android:keyLabel="ф" />
+        <Key android:codes="97" android:keyLabel="ф" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
         <Key android:codes="115" android:keyLabel="ы" />
         <Key android:codes="100" android:keyLabel="в" />
         <Key android:codes="102" android:keyLabel="а" />
@@ -56,7 +57,8 @@
         <Key android:codes="107" android:keyLabel="л" />
         <Key android:codes="108" android:keyLabel="д" />
         <Key android:codes="59" android:keyLabel="ж" />
-        <Key android:codes="39" android:keyEdgeFlags="right" android:keyLabel="э" />
+        <Key android:codes="39" android:keyLabel="э" />
+        <Key android:codes="46" android:keyLabel="." android:keyEdgeFlags="right" />
     </Row>
     <Row>
         <Key android:keyWidth="13%p" android:codes="-1" android:keyEdgeFlags="left" android:isModifier="true" android:isSticky="true" android:keyIcon="@drawable/sym_keyboard_shift" />
@@ -74,11 +76,10 @@
     
     <Row android:rowEdgeFlags="bottom">
         <Key android:keyWidth="10%p" android:codes="-101" android:keyEdgeFlags="left" android:keyLabel="**" />
-        <Key android:keyWidth="15%p" android:codes="-104" android:keyLabel="Qw" />
+        <Key android:keyWidth="15%p" android:codes="-104" android:keyLabel="ABC" />
         <Key android:keyWidth="15%p" android:codes="-105" android:keyLabel="\@#" />
-        <Key android:keyWidth="15%p" android:codes="-103" android:keyLabel="Йц" />
-        <Key android:keyWidth="15%p" android:codes="32" android:isRepeatable="true" android:keyIcon="@drawable/sym_keyboard_space" />
-        <Key android:keyWidth="10%p" android:codes="46,44" android:keyLabel=". ," />
+        <Key android:keyWidth="15%p" android:codes="-103" android:keyLabel="АБВ" />
+        <Key android:keyWidth="25%p" android:codes="32" android:isRepeatable="true" android:keyIcon="@drawable/sym_keyboard_space" />
         <Key android:keyWidth="20%p" android:codes="10" android:keyEdgeFlags="right" android:keyIcon="@drawable/sym_keyboard_return" />
     </Row>
 </Keyboard>

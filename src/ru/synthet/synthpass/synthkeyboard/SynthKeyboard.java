@@ -54,6 +54,7 @@ public class SynthKeyboard extends InputMethodService implements
     private LatinKeyboard mQwertyPWKeyboard;
 
 	private LatinKeyboard mCurKeyboard;
+	private String mWordSeparators;
 
     private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9","0" };
     private final String yoNumericShift[]  = { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")" };
@@ -87,6 +88,7 @@ public class SynthKeyboard extends InputMethodService implements
 	public void onCreate() {
 		super.onCreate();
 		mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		mWordSeparators = getResources().getString(R.string.word_separators);
 	}
 
     @Override
@@ -375,19 +377,49 @@ public class SynthKeyboard extends InputMethodService implements
 				new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
 	}
 
+	/**
+	 * Helper to send a character to the editor as raw key events.
+	 */
+
+	private void sendKey(int keyCode) {
+		switch (keyCode) {
+		case '\n':
+            keyDownUp(KeyEvent.KEYCODE_ENTER);
+            EditorInfo editorInfo = getCurrentInputEditorInfo();
+            if (editorInfo != null) {
+                if((EditorInfo.IME_MASK_ACTION & editorInfo.imeOptions) == EditorInfo.IME_ACTION_DONE) {
+                    handleClose();
+                }
+            }
+			break;
+		default:
+			if (keyCode >= '0' && keyCode <= '9') {
+				keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
+			} else {
+				getCurrentInputConnection().commitText(
+						String.valueOf((char) keyCode), 1);
+			}
+			break;
+		}
+	}
+
 	// Implementation of KeyboardViewListener
 
 	public void onKey(int primaryCode, int[] keyCodes) {
         Keyboard current;
-		if (primaryCode == Keyboard.KEYCODE_DELETE) {
-			//android.util.Log.d("DEBUG", "DELETE");
+        if (isWordSeparator(primaryCode)) {
+            if (mComposing.length() > 0) {
+                commitTyped(getCurrentInputConnection());
+            }
+            sendKey(primaryCode);
+            updateShiftKeyState(getCurrentInputEditorInfo());
+        } else if (primaryCode == Keyboard.KEYCODE_DELETE) {
 			handleBackspace();
 		} else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
-			//android.util.Log.d("DEBUG", "SHIFT");
 			handleShift();
 		} else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
-			//android.util.Log.d("DEBUG", "CANCEL");
 			handleClose();
+            return;
 		} else if (primaryCode == LatinKeyboardView.KEYCODE_SYNTHPASS) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_Dialog));
@@ -483,7 +515,7 @@ public class SynthKeyboard extends InputMethodService implements
 		}
 	}
 
-	public void onText(CharSequence text) {
+    public void onText(CharSequence text) {
 		InputConnection ic = getCurrentInputConnection();
 		if (ic == null)
 			return;
@@ -556,6 +588,15 @@ public class SynthKeyboard extends InputMethodService implements
 		} else {
 			mLastShiftTime = now;
 		}
+	}
+
+	private String getWordSeparators() {
+		return mWordSeparators;
+	}
+
+	boolean isWordSeparator(int code) {
+		String separators = getWordSeparators();
+		return separators.contains(String.valueOf((char) code));
 	}
 
 	public void swipeRight() {

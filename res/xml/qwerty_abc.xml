@@ -82,7 +82,7 @@
         <Key android:keyWidth="10%p" android:codes="-101" android:keyEdgeFlags="left" android:keyLabel="**" />
         <Key android:keyWidth="15%p" android:codes="-102" android:keyIcon="@drawable/sym_keyboard" />
         <Key android:keyWidth="15%p" android:codes="-105" android:keyLabel="\@#" />
-        <Key android:keyWidth="15%p" android:codes="-103" android:keyLabel="Йц" />
+        <Key android:keyWidth="15%p" android:codes="-103" android:keyLabel="АБВ" />
         <Key android:keyWidth="15%p" android:codes="32" android:keyIcon="@drawable/sym_keyboard_space"  android:isRepeatable="true"/>
         <Key android:keyWidth="10%p" android:codes="46" android:keyLabel="."  />
         <Key android:keyWidth="20%p" android:codes="10" android:keyIcon="@drawable/sym_keyboard_return" android:keyEdgeFlags="right"/>
