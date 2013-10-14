@@ -210,15 +210,19 @@ class PassGenerator {
         byte[] inputHashArr = hash(inputString);
         String returnString = "";
         int num = 0;
-        for (int i=0; i < requiredLength; i++) {
+        int numOld = 0;
+        for (int i=0;returnString.length() != requiredLength; i++) {
             num = (i + inputString.length() + num)%inputHashArr.length;
             String chr = getSymbol(inputHashArr[num] & 0xFF);
-            if ((i > 0) && (returnString.charAt(i-1) == chr.charAt(0))) {
+            if ((i > 0) && (num == numOld)) {
+                continue;
+            }
+            if ((i > 0) && (returnString.charAt(returnString.length()-1) == chr.charAt(0)))  {
                 i--;
                 continue;
             }
             returnString += chr;
-
+            numOld = num;
         }
         return returnString;
     }
