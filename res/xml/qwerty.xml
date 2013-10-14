@@ -19,7 +19,7 @@
 <Keyboard android:keyWidth="8.25%p" android:keyHeight="@dimen/key_height" android:horizontalGap="0.0px" android:verticalGap="0.0px"
           xmlns:android="http://schemas.android.com/apk/res/android">
     <Row>
-        <Key android:codes="96" android:keyLabel="ё" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
+        <Key android:codes="1105" android:keyLabel="ё" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
         <Key android:codes="49" android:keyLabel="1" />
         <Key android:codes="50" android:keyLabel="2" />
         <Key android:codes="51" android:keyLabel="3" />

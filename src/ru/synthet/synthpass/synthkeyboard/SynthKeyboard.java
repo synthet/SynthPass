@@ -33,6 +33,7 @@ import android.view.inputmethod.InputMethodManager;
 import ru.synthet.synthpass.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SynthKeyboard extends InputMethodService implements
@@ -56,8 +57,8 @@ public class SynthKeyboard extends InputMethodService implements
 	private LatinKeyboard mCurKeyboard;
 	private String mWordSeparators;
 
-    private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9","0" };
-    private final String yoNumericShift[]  = { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")" };
+    private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9","0", "-" };
+    private final String yoNumericShift[]  = { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_" };
     private final SparseIntArray shiftKeyCodes = new SparseIntArray();
 
     public SynthKeyboard() {
@@ -78,6 +79,8 @@ public class SynthKeyboard extends InputMethodService implements
         shiftKeyCodes.append(56, 42);
         shiftKeyCodes.append(57, 40);
         shiftKeyCodes.append(48, 41);
+        shiftKeyCodes.append(45, 95); // "-" -> "_"
+        shiftKeyCodes.append(61, 44); // "+" -> ","
     }
 
 	/**
@@ -250,7 +253,7 @@ public class SynthKeyboard extends InputMethodService implements
 			int newSelStart, int newSelEnd, int candidatesStart,
 			int candidatesEnd) {
 		super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
-				candidatesStart, candidatesEnd);
+                candidatesStart, candidatesEnd);
 
 		// If the current selection in the text view changes, we should
 		// clear whatever candidate text we have.
@@ -340,24 +343,32 @@ public class SynthKeyboard extends InputMethodService implements
 						attr.inputType);
 			}
 			mInputView.setShifted(mCapsLock || caps != 0);
-            if (mQwertyPWKeyboard == mInputView.getKeyboard())
+            if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard()))
                 updateNumericLabels(mInputView.isShifted());
 		}
 	}
 
-    private void updateNumericLabels(boolean flag) {
-        List list = mInputView.getKeyboard().getKeys();
-        int i = 0;
-        do
-        {
-            if(i >= yoNumericNormal.length)
-                return;
-            if(flag)
-                ((android.inputmethodservice.Keyboard.Key)list.get(i)).label = yoNumericShift[i];
-            else
-                ((android.inputmethodservice.Keyboard.Key)list.get(i)).label = yoNumericNormal[i];
-            i++;
-        } while(true);
+    private void updateNumericLabels(boolean shifted) {
+        int j=0;
+        for(Iterator<Keyboard.Key> i = mInputView.getKeyboard().getKeys().iterator(); j<yoNumericNormal.length; j++) {
+            if (i.hasNext()) {
+                Keyboard.Key key = i.next();
+                if (j == 0)
+                    continue;
+                if (shifted)
+                    key.label = yoNumericShift[j];
+                else
+                    key.label = yoNumericNormal[j];
+            }
+        }
+        Keyboard.Key pointKey = mInputView.getKeyboard().getKeys().get(35);
+        if (shifted) {
+            pointKey.label    = ",";
+            pointKey.codes[0] = 61;
+        } else {
+            pointKey.label    = ".";
+            pointKey.codes[0] = 46;
+        }
     }
 
 	/**
@@ -548,7 +559,7 @@ public class SynthKeyboard extends InputMethodService implements
 		}
 		checkToggleCapsLock();
 		mInputView.setShifted(mCapsLock || !mInputView.isShifted());
-        if (mQwertyPWKeyboard == mInputView.getKeyboard())
+        if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard()))
             updateNumericLabels(mInputView.isShifted());
 	}
 
@@ -556,9 +567,9 @@ public class SynthKeyboard extends InputMethodService implements
 
 		if (isInputViewShown()) {
 			if (mInputView.isShifted()) {
-                if (mQwertyPWKeyboard == mInputView.getKeyboard()) {
+                if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard())) {
                     int shiftedCode = Character.toUpperCase(primaryCode);
-                    primaryCode = shiftKeyCodes.get(shiftedCode,shiftedCode);
+                    primaryCode = shiftKeyCodes.get(shiftedCode, shiftedCode);
                 } else {
 				    primaryCode = Character.toUpperCase(primaryCode);
                 }
