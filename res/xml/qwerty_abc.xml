@@ -50,8 +50,7 @@
     </Row>
     
     <Row>
-        <Key android:codes="97" android:keyLabel="a" android:horizontalGap="5%p" 
-                android:keyEdgeFlags="left"/>
+        <Key android:codes="97" android:keyLabel="a"  android:keyEdgeFlags="left"/>
         <Key android:codes="115" android:keyLabel="s"/>
         <Key android:codes="100" android:keyLabel="d"/>
         <Key android:codes="102" android:keyLabel="f"/>
@@ -59,7 +58,8 @@
         <Key android:codes="104" android:keyLabel="h"/>
         <Key android:codes="106" android:keyLabel="j"/>
         <Key android:codes="107" android:keyLabel="k"/>
-        <Key android:codes="108" android:keyLabel="l" android:keyEdgeFlags="right"/>
+        <Key android:codes="108" android:keyLabel="l" />
+        <Key android:keyWidth="10%p" android:codes="45" android:keyLabel="-"  android:keyEdgeFlags="right" />
     </Row>
     
     <Row>
@@ -84,7 +84,7 @@
         <Key android:keyWidth="15%p" android:codes="-105" android:keyLabel="\@#" />
         <Key android:keyWidth="15%p" android:codes="-103" android:keyLabel="Йц" />
         <Key android:keyWidth="15%p" android:codes="32" android:keyIcon="@drawable/sym_keyboard_space"  android:isRepeatable="true"/>
-        <Key android:keyWidth="10%p" android:codes="46,44" android:keyLabel=". ,"  />
+        <Key android:keyWidth="10%p" android:codes="46" android:keyLabel="."  />
         <Key android:keyWidth="20%p" android:codes="10" android:keyIcon="@drawable/sym_keyboard_return" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>

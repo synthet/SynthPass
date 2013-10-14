@@ -59,7 +59,6 @@
     <string name="about"><![CDATA[SynthPass © Synthetic Soft 2013
         vPass 3 algorithm by Vladstudio (www.vpass.info)]]></string>
 
-    <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|\"</string>
     <string name="change_entry">Создать пароль</string>
     <string name="open_entry">Создать пароль</string>
     <string name="random_entry">случайный</string>

@@ -23,6 +23,8 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.provider.Settings;
 import android.text.InputType;
+import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.*;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
@@ -42,7 +44,6 @@ public class SynthKeyboard extends InputMethodService implements
 
 	private StringBuilder mComposing = new StringBuilder();
 	private boolean mPredictionOn;
-	private boolean mCompletionOn = false;
 	private int mLastDisplayWidth;
 	private boolean mCapsLock;
 	private long mLastShiftTime;
@@ -53,8 +54,30 @@ public class SynthKeyboard extends InputMethodService implements
     private LatinKeyboard mQwertyPWKeyboard;
 
 	private LatinKeyboard mCurKeyboard;
-	private String mWordSeparators;
 
+    private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9","0" };
+    private final String yoNumericShift[]  = { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")" };
+    private final SparseIntArray shiftKeyCodes = new SparseIntArray();
+
+    public SynthKeyboard() {
+        shiftKeyCodes.append(91, 123);
+        shiftKeyCodes.append(93, 125);
+        shiftKeyCodes.append(59, 58);
+        shiftKeyCodes.append(39, 34);
+        shiftKeyCodes.append(44, 60);
+        shiftKeyCodes.append(46, 62);
+        shiftKeyCodes.append(96, 126);
+        shiftKeyCodes.append(49, 33);
+        shiftKeyCodes.append(50, 64);
+        shiftKeyCodes.append(51, 35);
+        shiftKeyCodes.append(52, 36);
+        shiftKeyCodes.append(53, 37);
+        shiftKeyCodes.append(54, 94);
+        shiftKeyCodes.append(55, 38);
+        shiftKeyCodes.append(56, 42);
+        shiftKeyCodes.append(57, 40);
+        shiftKeyCodes.append(48, 41);
+    }
 
 	/**
 	 * Main initialization of the input method component. Be sure to call to
@@ -64,14 +87,13 @@ public class SynthKeyboard extends InputMethodService implements
 	public void onCreate() {
 		super.onCreate();
 		mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-		mWordSeparators = getResources().getString(R.string.word_separators);
 	}
 
-    //@Override
-    //public void onUpdateExtractingVisibility(EditorInfo ei) {
-    //    ei.imeOptions |= EditorInfo.IME_FLAG_NO_EXTRACT_UI;
-    //    super.onUpdateExtractingVisibility(ei);
-    //}
+    @Override
+    public void onUpdateExtractingVisibility(EditorInfo ei) {
+        //ei.imeOptions |= EditorInfo.IME_FLAG_NO_EXTRACT_UI;
+        super.onUpdateExtractingVisibility(ei);
+    }
 
     /**
 	 * This is the point where you can do all of your UI initialization. It is
@@ -126,7 +148,6 @@ public class SynthKeyboard extends InputMethodService implements
 		mComposing.setLength(0);
 
 		mPredictionOn = false;
-		mCompletionOn = false;
 
 		// We are now going to initialize our state based on the type of
 		// text being edited.
@@ -171,7 +192,6 @@ public class SynthKeyboard extends InputMethodService implements
 				// candidates when in fullscreen mode, otherwise relying
 				// own it displaying its own UI.
 				mPredictionOn = false;
-				mCompletionOn = isFullscreenMode();
 			}
 
 			// We also want to look at the current state of the editor
@@ -318,8 +338,25 @@ public class SynthKeyboard extends InputMethodService implements
 						attr.inputType);
 			}
 			mInputView.setShifted(mCapsLock || caps != 0);
+            if (mQwertyPWKeyboard == mInputView.getKeyboard())
+                updateNumericLabels(mInputView.isShifted());
 		}
 	}
+
+    private void updateNumericLabels(boolean flag) {
+        List list = mInputView.getKeyboard().getKeys();
+        int i = 0;
+        do
+        {
+            if(i >= yoNumericNormal.length)
+                return;
+            if(flag)
+                ((android.inputmethodservice.Keyboard.Key)list.get(i)).label = yoNumericShift[i];
+            else
+                ((android.inputmethodservice.Keyboard.Key)list.get(i)).label = yoNumericNormal[i];
+            i++;
+        } while(true);
+    }
 
 	/**
 	 * Helper to determine if a given character code is alphabetic.
@@ -338,44 +375,11 @@ public class SynthKeyboard extends InputMethodService implements
 				new KeyEvent(KeyEvent.ACTION_UP, keyEventCode));
 	}
 
-	/**
-	 * Helper to send a character to the editor as raw key events.
-	 */
-
-	private void sendKey(int keyCode) {
-		switch (keyCode) {
-		case '\n':
-            keyDownUp(KeyEvent.KEYCODE_ENTER);
-            EditorInfo editorInfo = getCurrentInputEditorInfo();
-            if (editorInfo != null) {
-                if((EditorInfo.IME_MASK_ACTION & editorInfo.imeOptions) == EditorInfo.IME_ACTION_DONE) {
-                    handleClose();
-                }
-            }
-			break;
-		default:
-			if (keyCode >= '0' && keyCode <= '9') {
-				keyDownUp(keyCode - '0' + KeyEvent.KEYCODE_0);
-			} else {
-				getCurrentInputConnection().commitText(
-						String.valueOf((char) keyCode), 1);
-			}
-			break;
-		}
-	}
-
 	// Implementation of KeyboardViewListener
 
 	public void onKey(int primaryCode, int[] keyCodes) {
         Keyboard current;
-		if (isWordSeparator(primaryCode)) {
-			// Handle separator
-			if (mComposing.length() > 0) {
-				commitTyped(getCurrentInputConnection());
-			}
-			sendKey(primaryCode);
-			updateShiftKeyState(getCurrentInputEditorInfo());
-		} else if (primaryCode == Keyboard.KEYCODE_DELETE) {
+		if (primaryCode == Keyboard.KEYCODE_DELETE) {
 			//android.util.Log.d("DEBUG", "DELETE");
 			handleBackspace();
 		} else if (primaryCode == Keyboard.KEYCODE_SHIFT) {
@@ -384,7 +388,6 @@ public class SynthKeyboard extends InputMethodService implements
 		} else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
 			//android.util.Log.d("DEBUG", "CANCEL");
 			handleClose();
-			return;
 		} else if (primaryCode == LatinKeyboardView.KEYCODE_SYNTHPASS) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_Dialog));
@@ -513,13 +516,20 @@ public class SynthKeyboard extends InputMethodService implements
 		}
 		checkToggleCapsLock();
 		mInputView.setShifted(mCapsLock || !mInputView.isShifted());
+        if (mQwertyPWKeyboard == mInputView.getKeyboard())
+            updateNumericLabels(mInputView.isShifted());
 	}
 
 	private void handleCharacter(int primaryCode, int[] keyCodes) {
 
 		if (isInputViewShown()) {
 			if (mInputView.isShifted()) {
-				primaryCode = Character.toUpperCase(primaryCode);
+                if (mQwertyPWKeyboard == mInputView.getKeyboard()) {
+                    int shiftedCode = Character.toUpperCase(primaryCode);
+                    primaryCode = shiftKeyCodes.get(shiftedCode,shiftedCode);
+                } else {
+				    primaryCode = Character.toUpperCase(primaryCode);
+                }
 			}
 		}
 		if (isAlphabet(primaryCode) && mPredictionOn) {
@@ -546,15 +556,6 @@ public class SynthKeyboard extends InputMethodService implements
 		} else {
 			mLastShiftTime = now;
 		}
-	}
-
-	private String getWordSeparators() {
-		return mWordSeparators;
-	}
-
-	boolean isWordSeparator(int code) {
-		String separators = getWordSeparators();
-		return separators.contains(String.valueOf((char) code));
 	}
 
 	public void swipeRight() {
