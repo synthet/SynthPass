@@ -16,10 +16,10 @@
 ** limitations under the License.
 */
 -->
-<Keyboard android:keyWidth="8.25%p" android:keyHeight="@dimen/key_height" android:horizontalGap="0.0px" android:verticalGap="0.0px"
+<Keyboard android:keyWidth="8.28%p" android:keyHeight="@dimen/key_height" android:horizontalGap="0.0px" android:verticalGap="0.0px"
           xmlns:android="http://schemas.android.com/apk/res/android">
     <Row>
-        <Key android:codes="96" android:keyLabel="ё" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
+        <Key android:codes="96" android:keyLabel="ё" android:keyEdgeFlags="left" />
         <Key android:codes="49" android:keyLabel="1" />
         <Key android:codes="50" android:keyLabel="2" />
         <Key android:codes="51" android:keyLabel="3" />
@@ -33,7 +33,7 @@
         <Key android:codes="45" android:keyLabel="-" android:keyEdgeFlags="right" />
     </Row>
     <Row>
-        <Key android:codes="113" android:keyLabel="й" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
+        <Key android:codes="113" android:keyLabel="й" android:keyEdgeFlags="left" />
         <Key android:codes="119" android:keyLabel="ц" />
         <Key android:codes="101" android:keyLabel="у" />
         <Key android:codes="114" android:keyLabel="к" />
@@ -47,7 +47,7 @@
         <Key android:codes="93" android:keyEdgeFlags="right" android:keyLabel="ъ" />
     </Row>
     <Row>
-        <Key android:codes="97" android:keyLabel="ф" android:keyEdgeFlags="left" android:horizontalGap="1.0%p" />
+        <Key android:codes="97" android:keyLabel="ф" android:keyEdgeFlags="left" />
         <Key android:codes="115" android:keyLabel="ы" />
         <Key android:codes="100" android:keyLabel="в" />
         <Key android:codes="102" android:keyLabel="а" />
@@ -61,7 +61,7 @@
         <Key android:codes="46" android:keyLabel="." android:keyEdgeFlags="right" />
     </Row>
     <Row>
-        <Key android:keyWidth="13%p" android:codes="-1" android:keyEdgeFlags="left" android:isModifier="true" android:isSticky="true" android:keyIcon="@drawable/sym_keyboard_shift" />
+        <Key android:keyWidth="12.5%p" android:codes="-1" android:keyEdgeFlags="left" android:isModifier="true" android:isSticky="true" android:keyIcon="@drawable/sym_keyboard_shift" />
         <Key android:codes="122" android:keyLabel="я" />
         <Key android:codes="120" android:keyLabel="ч" />
         <Key android:codes="99" android:keyLabel="с" />
@@ -71,7 +71,7 @@
         <Key android:codes="109" android:keyLabel="ь" />
         <Key android:codes="44" android:keyLabel="б" />
         <Key android:codes="46" android:keyLabel="ю" />
-        <Key android:keyWidth="13%p" android:codes="-5" android:keyEdgeFlags="right" android:isRepeatable="true" android:keyIcon="@drawable/sym_keyboard_delete" />
+        <Key android:keyWidth="12.5%p" android:codes="-5" android:keyEdgeFlags="right" android:isRepeatable="true" android:keyIcon="@drawable/sym_keyboard_delete" />
     </Row>
     
     <Row android:rowEdgeFlags="bottom">
