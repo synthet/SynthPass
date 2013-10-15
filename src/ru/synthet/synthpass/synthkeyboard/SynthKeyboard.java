@@ -18,6 +18,7 @@ package ru.synthet.synthpass.synthkeyboard;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -60,6 +61,9 @@ public class SynthKeyboard extends InputMethodService implements
     private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9","0", "-" };
     private final String yoNumericShift[]  = { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_" };
     private final SparseIntArray shiftKeyCodes = new SparseIntArray();
+
+    private Drawable mShiftIcon;
+    private Drawable mShiftShiftedIcon;
 
     public SynthKeyboard() {
         shiftKeyCodes.append(91, 123);
@@ -116,10 +120,12 @@ public class SynthKeyboard extends InputMethodService implements
 				return;
 			mLastDisplayWidth = displayWidth;
 		}
-		mQwertyKeyboard = new LatinKeyboard(this, R.xml.qwerty);
-		mSymbolsKeyboard = new LatinKeyboard(this, R.xml.symbols);
+		mQwertyKeyboard    = new LatinKeyboard(this, R.xml.qwerty);
+		mSymbolsKeyboard   = new LatinKeyboard(this, R.xml.symbols);
         mQwertyABCKeyboard = new LatinKeyboard(this, R.xml.qwerty_abc);
-        mQwertyPWKeyboard = new LatinKeyboard(this, R.xml.qwerty_pw);
+        mQwertyPWKeyboard  = new LatinKeyboard(this, R.xml.qwerty_pw);
+        mShiftIcon         = getResources().getDrawable(R.drawable.sym_keyboard_shift);
+        mShiftShiftedIcon  = getResources().getDrawable(R.drawable.sym_keyboard_shift_locked);
 	}
 
 	/**
@@ -343,10 +349,24 @@ public class SynthKeyboard extends InputMethodService implements
 						attr.inputType);
 			}
 			mInputView.setShifted(mCapsLock || caps != 0);
+            updateShiftIcon(mCapsLock, mInputView.getKeyboard());
             if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard()))
                 updateNumericLabels(mInputView.isShifted());
 		}
 	}
+
+    private void updateShiftIcon(boolean flag, Keyboard keyboard) {
+        int keyShiftIndex = keyboard.getShiftKeyIndex();
+        if ((keyShiftIndex != -1) && (keyboard != mSymbolsKeyboard)) {
+            Keyboard.Key key = keyboard.getKeys().get(keyShiftIndex);
+            Drawable drawable;
+            if(flag)
+                drawable = mShiftShiftedIcon;
+            else
+                drawable = mShiftIcon;
+            key.icon = drawable;
+        }
+    }
 
     private void updateNumericLabels(boolean shifted) {
         int j=0;
@@ -509,19 +529,21 @@ public class SynthKeyboard extends InputMethodService implements
 		} else if (primaryCode == LatinKeyboardView.KEYCODE_MODE_CHANGE_EN && mInputView != null) {
             current = mQwertyABCKeyboard;
             mInputView.setKeyboard(current);
+            updateShiftKeyState(getCurrentInputEditorInfo());
         } else if (primaryCode == LatinKeyboardView.KEYCODE_MODE_CHANGE_RU && mInputView != null) {
             current = mQwertyKeyboard;
             mInputView.setKeyboard(current);
+            updateShiftKeyState(getCurrentInputEditorInfo());
         } else if (primaryCode == LatinKeyboardView.KEYCODE_MODE_CHANGE_PW && mInputView != null) {
             current = mQwertyPWKeyboard;
             mInputView.setKeyboard(current);
+            updateShiftKeyState(getCurrentInputEditorInfo());
         } else if (primaryCode == LatinKeyboardView.KEYCODE_MODE_CHANGE_SY && mInputView != null) {
             current = mSymbolsKeyboard;
             mInputView.setKeyboard(current);
+            updateShiftKeyState(getCurrentInputEditorInfo());
         } else {
 			handleCharacter(primaryCode, keyCodes);
-			// mCapsLock = false;
-			// mInputView.setShifted(mCapsLock);
 			updateShiftKeyState(getCurrentInputEditorInfo());
 		}
 	}
@@ -558,6 +580,7 @@ public class SynthKeyboard extends InputMethodService implements
 			return;
 		}
 		checkToggleCapsLock();
+        updateShiftIcon(mCapsLock, mInputView.getKeyboard());
 		mInputView.setShifted(mCapsLock || !mInputView.isShifted());
         if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard()))
             updateNumericLabels(mInputView.isShifted());
