@@ -58,8 +58,9 @@ public class SynthKeyboard extends InputMethodService implements
 	private LatinKeyboard mCurKeyboard;
 	private String mWordSeparators;
 
-    private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9","0", "-" };
-    private final String yoNumericShift[]  = { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_" };
+    private final String yoNumericNormal[] = { "\u0451", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
+    private final String yoNumericShift[]  = { "~",      "!", "@", "#", "$", "%", "^", "&", "*", "(", ")" };
+
     private final SparseIntArray shiftKeyCodes = new SparseIntArray();
 
     private Drawable mShiftIcon;
@@ -350,7 +351,7 @@ public class SynthKeyboard extends InputMethodService implements
 			}
 			mInputView.setShifted(mCapsLock || caps != 0);
             updateShiftIcon(mCapsLock, mInputView.getKeyboard());
-            if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard()))
+            if (mSymbolsKeyboard != mInputView.getKeyboard())
                 updateNumericLabels(mInputView.isShifted());
 		}
 	}
@@ -369,8 +370,21 @@ public class SynthKeyboard extends InputMethodService implements
     }
 
     private void updateNumericLabels(boolean shifted) {
-        int j=0;
-        for(Iterator<Keyboard.Key> i = mInputView.getKeyboard().getKeys().iterator(); j<yoNumericNormal.length; j++) {
+        int j;
+        int rowLen = yoNumericNormal.length;
+        Keyboard.Key pointKey;
+        Keyboard.Key dashKey;
+        if (mQwertyABCKeyboard == mInputView.getKeyboard()) {
+            j = 1;
+            pointKey = mInputView.getKeyboard().getKeys().get(44);
+            dashKey  = mInputView.getKeyboard().getKeys().get(29);
+        } else {
+            j = 0;
+            pointKey = mInputView.getKeyboard().getKeys().get(35);
+            dashKey  = mInputView.getKeyboard().getKeys().get(11);
+        }
+        // digits
+        for(Iterator<Keyboard.Key> i = mInputView.getKeyboard().getKeys().iterator(); j<rowLen; j++) {
             if (i.hasNext()) {
                 Keyboard.Key key = i.next();
                 if (j == 0)
@@ -381,11 +395,14 @@ public class SynthKeyboard extends InputMethodService implements
                     key.label = yoNumericNormal[j];
             }
         }
-        Keyboard.Key pointKey = mInputView.getKeyboard().getKeys().get(35);
+        // point & dash
         if (shifted) {
+            dashKey.label     = "_";
             pointKey.label    = ",";
             pointKey.codes[0] = 61;
+
         } else {
+            dashKey.label     = "-";
             pointKey.label    = ".";
             pointKey.codes[0] = 46;
         }
@@ -582,7 +599,7 @@ public class SynthKeyboard extends InputMethodService implements
 		checkToggleCapsLock();
         updateShiftIcon(mCapsLock, mInputView.getKeyboard());
 		mInputView.setShifted(mCapsLock || !mInputView.isShifted());
-        if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard()))
+        if (mSymbolsKeyboard != mInputView.getKeyboard())
             updateNumericLabels(mInputView.isShifted());
 	}
 
@@ -590,7 +607,7 @@ public class SynthKeyboard extends InputMethodService implements
 
 		if (isInputViewShown()) {
 			if (mInputView.isShifted()) {
-                if ((mQwertyPWKeyboard == mInputView.getKeyboard()) || (mQwertyKeyboard == mInputView.getKeyboard())) {
+                if (mSymbolsKeyboard != mInputView.getKeyboard()) {
                     int shiftedCode = Character.toUpperCase(primaryCode);
                     primaryCode = shiftKeyCodes.get(shiftedCode, shiftedCode);
                 } else {
