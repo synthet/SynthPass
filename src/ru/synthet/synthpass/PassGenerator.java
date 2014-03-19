@@ -14,7 +14,6 @@ package ru.synthet.synthpass;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import android.util.Log;
 import iaik.sha3.IAIKSHA3Provider;
 
 import java.nio.ByteBuffer;
@@ -48,7 +47,7 @@ class PassGenerator {
         try {
             sha512 = MessageDigest.getInstance("KECCAK512", "IAIK_SHA3");
         } catch (Exception ex) {
-            Log.e(TAG, "Error", ex);
+            //Log.e(TAG, "Error", ex);
         }
         // prepare all available letters, digits, symbols
         String baseSymbols = baseUpperCase + baseLowerCase + baseDigits;
@@ -190,7 +189,7 @@ class PassGenerator {
         try {
             inputHashArr = sha512.digest(inputString.getBytes("UTF-8"));
         } catch (Exception ex) {
-            Log.e(TAG, "Error", ex);
+            //Log.e(TAG, "Error", ex);
         }
         return inputHashArr;
     }
@@ -201,7 +200,7 @@ class PassGenerator {
         try {
             inputHashArr = sha512.digest(inputBytes);
         } catch (Exception ex) {
-            Log.e(TAG, "Error", ex);
+            //Log.e(TAG, "Error", ex);
         }
         return inputHashArr;
     }
