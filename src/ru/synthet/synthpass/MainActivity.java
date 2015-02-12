@@ -67,15 +67,15 @@ public class MainActivity extends TabActivity {
         tabHost.addTab(tabSpec);
         // add
         tabHost.setCurrentTab(0);
-        tabHost.getTabWidget().getLayoutParams().height = 50;
-        tabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 50;
-        tabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 50;
-        tabHost.getTabWidget().getChildAt(2).getLayoutParams().height = 50;
+        //tabHost.getTabWidget().getLayoutParams().height = 50;
+        //tabHost.getTabWidget().getChildAt(0).getLayoutParams().height = 50;
+        //tabHost.getTabWidget().getChildAt(1).getLayoutParams().height = 50;
+        //tabHost.getTabWidget().getChildAt(2).getLayoutParams().height = 50;
 
     }
 
     private void initializeWindow() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.pass_main);
 
     }

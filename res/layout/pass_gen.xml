@@ -17,9 +17,9 @@
 */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent" tools:context=".PassGenActivity">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -49,14 +49,15 @@
                       android:editable="true" android:focusable="true" android:enabled="true" android:password="true"
                       android:singleLine="true" android:selectAllOnFocus="false" android:hint="@string/master_password"
                       android:imeOptions="flagNoExtractUi"
-                      android:layout_marginLeft="5dp" android:layout_margin="5dp" android:inputType="textNoSuggestions|textPassword"/>
+                      android:layout_marginLeft="5dp" android:layout_margin="5dp" android:inputType="textNoSuggestions|textPassword"
+                      android:elevation="5dp"/>
             <AutoCompleteTextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="flagNoExtractUi|actionDone"
                     android:id="@+id/domainSearch" android:layout_gravity="left|center_vertical" android:hint="@string/domain"
                     android:layout_margin="5dp" android:inputType="textVisiblePassword"
-                    android:longClickable="false"/>
+                    android:longClickable="false" android:elevation="5dp"/>
             <Button android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="@string/generate" android:id="@+id/button"
                     android:layout_gravity="center" android:layout_margin="5dp"/>
